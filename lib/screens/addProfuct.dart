@@ -1,6 +1,7 @@
 import 'package:buyit/models/products.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddProduct extends StatefulWidget {
   @override
@@ -188,16 +189,23 @@ class _AddProductState extends State<AddProduct> {
                       style: TextStyle(fontSize: 18),
                     ),
                     color: Colors.amber[600],
-                    onPressed: () {
+                    onPressed: () async {
                       if (_globalKey.currentState.validate()) {
+                        var current_user =
+                            await FirebaseAuth.instance.currentUser();
                         try {
                           Firestore.instance.collection('products').add({
                             'product_name': _namecontroller.text,
                             'product_price': _pricecontroller.text,
                             'product_description': _descriptioncontroller.text,
                             'product_categoty': _categorycontroller.text,
+                            'owner': {
+                              'uid': current_user.uid,
+                              'email': current_user.email
+                            },
                             'product_path_location': _locationcontroller.text,
                           });
+                          Navigator.pop(context);
                         } catch (e) {
                           print(e);
                         }

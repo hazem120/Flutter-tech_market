@@ -1,5 +1,6 @@
 import 'package:buyit/screens/addProfuct.dart';
 import 'package:buyit/screens/adminHome.dart';
+import 'package:buyit/screens/edit_product.dart';
 import 'package:buyit/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:buyit/screens/login_screen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
           'adminHome': (context) => AdminHome(),
           'home': (context) => Home(),
           'addProduct': (context) => AddProduct(),
+          'editProduct': (context) => EditProduct(),
         },
         title: 'Flutter Demo',
         home: Scaffold());
