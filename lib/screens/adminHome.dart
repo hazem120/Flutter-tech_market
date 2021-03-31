@@ -29,16 +29,16 @@ class AdminHome extends StatelessWidget {
               ),
               Divider(color: Colors.black),
               SizedBox(height: 20),
-              ListTile(
-                title: Text(
-                  'Edit product - عدل منتج',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, 'editProduct');
-                },
-              ),
-              Divider(color: Colors.black),
+              // ListTile(
+              //   title: Text(
+              //     'Edit product - عدل منتج',
+              //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              //   ),
+              //   onTap: () {
+              //     Navigator.pushNamed(context, 'editProduct');
+              //   },
+              // ),
+              //Divider(color: Colors.black),
               SizedBox(height: 20),
               ListTile(
                 title: Text(
@@ -53,6 +53,19 @@ class AdminHome extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.indigo,
           title: Text('TechMarket'),
+          actions: [
+            FlatButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushNamed(context, 'LoginScreen');
+              },
+              color: Colors.indigo[500],
+              child: Text(
+                'logout',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            )
+          ],
         ),
         body: StreamBuilder(
           stream: Firestore.instance.collection('products').snapshots(),
@@ -78,16 +91,6 @@ class AdminHome extends StatelessWidget {
                       child: Column(
                         children: [
                           Image.asset(document['product_path_location']),
-
-                          // ListTile(
-                          //   leading: Icon(Icons.arrow_drop_down_circle),
-                          //   title: const Text('Card title 1'),
-                          //   subtitle: Text(
-                          //     'Secondary Text',
-                          //     style: TextStyle(
-                          //         color: Colors.black.withOpacity(0.6)),
-                          //   ),
-                          // ),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
@@ -99,19 +102,23 @@ class AdminHome extends StatelessWidget {
                           ButtonBar(
                             alignment: MainAxisAlignment.start,
                             children: [
+                              // FlatButton(
+                              //   textColor: const Color(0xFF6200EE),
+                              //   onPressed: () {
+                              //     // Perform some action
+                              //   },
+                              //   child: const Text(
+                              //     'Edit',
+                              //     style: TextStyle(fontSize: 18),
+                              //   ),
+                              // ),
                               FlatButton(
                                 textColor: const Color(0xFF6200EE),
                                 onPressed: () {
-                                  // Perform some action
-                                },
-                                child: const Text(
-                                  'Edit',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ),
-                              FlatButton(
-                                textColor: const Color(0xFF6200EE),
-                                onPressed: () {
+                                  Firestore.instance
+                                      .collection('products')
+                                      .document(document.documentID)
+                                      .delete();
                                   // Perform some action
                                 },
                                 child: const Text(

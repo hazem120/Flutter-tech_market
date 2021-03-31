@@ -51,13 +51,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Tech Market',
                         style: TextStyle(fontFamily: 'Pacifico', fontSize: 25),
                       ),
-                      Text(
-                        'بيع واشتري اونلاين',
-                        style: TextStyle(
-                            fontFamily: 'Pacifico',
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      // Text(
+                      //   'بيع واشتري اونلاين',
+                      //   style: TextStyle(
+                      //       fontFamily: 'Pacifico',
+                      //       fontSize: 25,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 70),
@@ -128,11 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                       password: _passwordcontroller.text);
                               setState(() => loading = false);
                               if (is_admin == true) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            AdminHome()));
+                                if (_passwordcontroller.text == 'admin1234') {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              AdminHome()));
+                                } else {
+                                  setState(() => error_message =
+                                      "wrong password for admin");
+                                }
                               } else {
                                 Navigator.pushReplacement(
                                     context,
